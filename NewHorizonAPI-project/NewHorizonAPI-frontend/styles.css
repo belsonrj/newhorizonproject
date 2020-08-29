@@ -1,0 +1,42 @@
+.top-header {
+    width: 100%;
+    height: 400px;
+    background-image: url(https://wallpaperaccess.com/full/1898692.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.header-text {
+    font-family: sans-serif;
+    color: white;
+    font-size: 100px;
+    text-shadow: 2px 2px #000000;
+}
+
+.segment {
+    float: left;
+    width: inherit;
+    overflow: hidden;
+}
+
+.ui.vertical.menu {
+    float: left;
+}
+
+.ui.grid {
+    padding: 20px;
+}
+
+.ui.label {
+    font-weight: 700;
+    font-size: 1.15em;
+}
+
+.location_img {
+    width: 75%;
+}
+
+.ui.button {
+    margin-top: 20px;
+    margin-bottom: 12px;
+}

@@ -1,43 +1,87 @@
+var codes = [
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowDown",
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowLeft",
+    "ArrowRight",
+    "b",
+    "a"
+];
+var BASE_URL = 'http://[::1]:3000';
+
 document.addEventListener('DOMContentLoaded', init)
 
-const BASE_URL = 'http://[::1]:3000';
 
-//AppID=2418140275145306
-const loginForm = document.getElementById("login-form");
-const loginButton = document.getElementById("login-form-submit");
-const loginErrorMsg = document.getElementById("login-error-msg");
+var home = document.getElementById('homeButton')
+
+//fetch(`${BASE_URL}/`)
+//    .then(response => response.json())
+//    .then(parsedResponse => console.log(parsedResponse));
 
 function init() {
-    formLogin()
-    loginButton.addEventListener("click", checkCred)
-    signupBUtton.addEventListener("click", newUser)
+    fetchEvents()
+    home.addEventListener('click', wipeEventInfo)
+    var addEvent = document.getElementById('new-event');
+    if (addEvent) {
+        addEvent.addEventListener('click', createNewEvent);
+    }
 }
 
-function formLogin() {
-    fetch(`${BASE_URL}/`)
+function createNewEvent() {
+    Event.newEvent()
+}
+
+function fetchEvents() {
+    fetch(`${BASE_URL}/events`)
         .then(response => response.json())
-        .then(parsedResponse => console.log(parsedResponse));
+        .then(json => {
+            for (let event of json) {
+                Event.renderSideBar(event)
+            }
+        })
 }
 
-function checkCred() {
-    fetch(`${BASE_URL}/login`)
-        .then(response => response.json())
-
+function renderEventProfile(event) {
+    let id = event.currentTarget.dataset.id
+    let app = new App()
+    App.fetchOneEvent(id).then(tripJson => {
+        renderNewEventProfile(tripJson)
+    })
 }
 
-//const loginForm = document.getElementById("login-form");
-//const loginButton = document.getElementById("login-form-submit");
-//const loginErrorMsg = document.getElementById("login-error-msg");
+function createSegment(name) {
+    let columnDiv = document.querySelector('.twelve')
+    let segmentDiv = document.createElement('div')
+    let labelDiv = document.createElement('div')
+    let addButtonDiv = document.createElement('div')
+    let cardsDiv = document.createElement('div')
+    let formDiv = document.createElement('div')
 
-//loginButton.addEventListener("click", (e) => {
-//    e.preventDefault();
-//    const username = loginForm.username.value;
-//   const password = loginForm.password.value;
-//
-//    if (username === "belson" && password === "rick") {
-//        alert("You have successfully logged in.");
-//        location.reload();
-//    } else {
-//        loginErrorMsg.style.opacity = 1;
-//    }
-//})
+    segmentDiv.classList.add("ui", "segment")
+    labelDiv.classList.add("ui", "top", "attached", "label")
+    addButtonDiv.classList.add("ui", "blue", "button")
+    cardsDiv.classList.add("ui", "cards")
+    formDiv.id = "form"
+
+    addButtonDiv.innerText = "Add New"
+    labelDiv.innerText = name
+
+    columnDiv.appendChild(segmentDiv)
+    segmentDiv.append(labelDiv, addButtonDiv, formDiv, cardsDiv)
+
+    return segmentDiv
+}
+
+function renderNewEventProfile(tripJson) {
+    Event.renderEventSegment(tripJson)
+    Artist.createArtistSegment(tripJson)
+    Venue.createVenueSegment(tripJson)
+}
+
+function wipeEventInfo() {
+    let eventInfoContainer = document.getElementById('twelve')
+    eventInfoContainer.innerHTML = ""
+}

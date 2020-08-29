@@ -3,28 +3,43 @@
 
 <head>
     <script type="application/javascript" src="src/index.js" charset="UTF-8"></script>
-    <link rel="stylesheet" href="css/styles.css">
     <meta charset="utf-8">
-    <title></title>
+    <title>Event Horizon</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.3/dist/semantic.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <main id="main-holder">
-        <h1 id="header">Event-Horizon</h1>
-        <h2 id="header2">your handy event indexer...</h2>
-        <h2 id="login-header">Login</h2>
+    <div class="top-header">
+        <h1 class="header-text">Event Horizon</h1>
+    </div>
 
-        <div id="login-error-msg-holder">
-            <p id="login-error-msg">Invalid username <span id="error-msg-second-line">and/or password</span></p>
+
+    <div class="ui grid">
+        <div class="four wide column" id="four">
+            <div class="ui inverted vertical menu" id='invertedMenu'>
+                <a class="active item" id="homeButton">Home</a>
+            </div>
+            <div class="ui blue button" id="new-trip">Add New Event</div>
+            <br>
+            <br>
+            <div id="new-trip-form">
+            </div>
         </div>
 
-        <form id="login-form" action="/login" method="post">
-            <input type="text" name="username" id="username-field" class="login-form-field" placeholder="Username">
-            <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-            <input type="submit" value="Login" id="login-form-submit">
-        </form>
+        <div class="twelve wide column" id="twelve">
 
+        </div>
+
+    </div>
     </main>
+    <script src="src/artist.js"></script>
+    <script src="src/index.js"></script>
+    <script src="src/app.js"></script>
+    <script src="src/venue.js"></script>
+    <script src="src/event.js"></script>
 </body>
 
 </html>
