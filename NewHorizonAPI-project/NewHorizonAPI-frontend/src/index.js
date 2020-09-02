@@ -11,44 +11,37 @@ var codes = [
     "a"
 ];
 var BASE_URL = 'http://[::1]:3000';
-
+var home = document.getElementById('homeButton')
+var addShow = document.getElementById('new-show')
 document.addEventListener('DOMContentLoaded', init)
 
-
-var home = document.getElementById('homeButton')
-
-//fetch(`${BASE_URL}/`)
-//    .then(response => response.json())
-//    .then(parsedResponse => console.log(parsedResponse));
-
 function init() {
-    fetchEvents()
-    home.addEventListener('click', wipeEventInfo)
-    var addEvent = document.getElementById('new-event');
-    if (addEvent) {
-        addEvent.addEventListener('click', createNewEvent);
-    }
+    fetchShows()
+    addShow.addEventListener('click', createNewShow);
+    home.addEventListener('click', wipeShowInfo);
+
 }
 
-function createNewEvent() {
-    Event.newEvent()
+function createNewShow() {
+    Show.newShow()
 }
 
-function fetchEvents() {
-    fetch(`${BASE_URL}/events`)
+function fetchShows() {
+    var BASE_URL = 'http://[::1]:3000';
+    fetch(`${BASE_URL}/shows`)
         .then(response => response.json())
         .then(json => {
-            for (let event of json) {
-                Event.renderSideBar(event)
+            for (let shw of json) {
+                Show.renderSideBar(shw)
             }
         })
 }
 
-function renderEventProfile(event) {
+function renderShowProfile(event) {
     let id = event.currentTarget.dataset.id
     let app = new App()
-    App.fetchOneEvent(id).then(tripJson => {
-        renderNewEventProfile(tripJson)
+    App.fetchOneShow(id).then(showJson => {
+        renderNewShowProfile(showJson)
     })
 }
 
@@ -64,6 +57,7 @@ function createSegment(name) {
     labelDiv.classList.add("ui", "top", "attached", "label")
     addButtonDiv.classList.add("ui", "blue", "button")
     cardsDiv.classList.add("ui", "cards")
+
     formDiv.id = "form"
 
     addButtonDiv.innerText = "Add New"
@@ -75,13 +69,13 @@ function createSegment(name) {
     return segmentDiv
 }
 
-function renderNewEventProfile(tripJson) {
-    Event.renderEventSegment(tripJson)
-    Artist.createArtistSegment(tripJson)
-    Venue.createVenueSegment(tripJson)
+function renderNewShowProfile(showJson) {
+    Show.renderShowSegment(showJson)
+    Artist.createArtistSegment(showJson)
+    Venue.createVenueSegment(showJson)
 }
 
-function wipeEventInfo() {
-    let eventInfoContainer = document.getElementById('twelve')
-    eventInfoContainer.innerHTML = ""
+function wipeShowInfo() {
+    let showInfoContainer = document.getElementById('twelve')
+    showInfoContainer.innerHTML = ""
 }

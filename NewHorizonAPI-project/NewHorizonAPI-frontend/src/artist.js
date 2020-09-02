@@ -1,17 +1,25 @@
 class Artist {
+    constructor(name, genre, comment, show_id) {
+        this.name = name;
+        this.genre = genre;
+        this.comment = comment;
+        this.show_id = show_id;
+    }
 
-    static createArtistSegment(tripJson) {
+    static createArtistSegment(showJson) {
         let segmentDiv = createSegment("Artists")
-        segmentDiv.querySelector('.button').dataset.id = tripJson.id
-        segmentDiv.querySelector('.button').addEventListener('click', Ticket.renderNewArtistForm)
         let cardsDiv = segmentDiv.querySelector('.cards')
-        if (tripJson.artists.length > 0) {
-            tripJson.artists.forEach(ticket => {
-                Ticket.addArtistCard(artist, cardsDiv)
+        segmentDiv.querySelector('.button').dataset.id = showJson.id
+        segmentDiv.querySelector('.button').addEventListener('click', Artist.renderNewArtistForm)
+            //debugger
+        if (showJson.artists.length > 0) {
+            showJson.artists.forEach(artist => {
+                Artist.addArtistCard(artist, cardsDiv)
             })
             Artist.artistCardEventListeners()
         }
     }
+
     static artistCardEventListeners() {
         document.querySelectorAll('#edit-artist').forEach(editButton => {
             editButton.addEventListener('click', Artist.renderEditForm)
@@ -73,17 +81,17 @@ class Artist {
     }
 
     static createNewArtist(e) {
-        let artistid = e.currentTarget.dataset.id
+        let showid = e.currentTarget.dataset.id
         let formInputs = e.currentTarget.parentNode.querySelectorAll('input')
-        debugger
-        App.postFetchArtist(formInputs[0].value, formInputs[1].value, formInputs[2].value, artistid)
+            //debugger
+        App.postFetchArtist(formInputs[0].value, formInputs[1].value, formInputs[2].value, showid)
     }
 
     static renderEditForm(e) {
         let id = e.currentTarget.dataset.id
         let artist
         let form = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('#form')
-        debugger
+            //debugger
         App.fetchOneArtist(id).then(json => {
             artist = json
             form.innerHTML = `<form class="ui form">
@@ -120,7 +128,7 @@ class Artist {
                 if (card.dataset.id == id) {
                     card.innerHTML = Artist.renderCard(json)
                     card.querySelector('#edit-artist').addEventListener('click', Artist.renderEditForm)
-                    card.querySelector('#delete-artist').addEventListener('click', Artist.deleteTicket)
+                    card.querySelector('#delete-artist').addEventListener('click', Artist.deleteArtist)
                 }
             })
             formDiv.innerHTML = ""

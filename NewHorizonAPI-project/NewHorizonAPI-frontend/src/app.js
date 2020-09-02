@@ -1,7 +1,7 @@
 class App {
 
-    static fetchOneEvent(id) {
-        return fetch(`${BASE_URL}/events/${id}`)
+    static fetchOneShow(id) {
+        return fetch(`${BASE_URL}/shows/${id}`)
             .then(response => response.json())
     }
 
@@ -15,14 +15,16 @@ class App {
             .then(response => response.json())
     }
 
-    static postFetchEvent(name, date, img_url, comment) {
-        return fetch(`${BASE_URL}/events/`, {
+    static postFetchShow(name, date, comment, img_url) {
+        let ShowForm = document.getElementById('new-show-form')
+        ShowForm.innerHTML = ""
+        return fetch(`${BASE_URL}/shows/`, {
                 method: "POST",
                 body: JSON.stringify({
                     name: name,
                     date: date,
-                    img_url: img_url,
                     comment: comment,
+                    img_url: img_url
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -30,21 +32,19 @@ class App {
                 }
             }).then(response => response.json())
             .then(json => {
-                Event.renderSideBar(json)
-                renderNewEventProfile(json)
+                Show.renderSideBar(json)
+                renderNewShowProfile(json)
             })
-        let EventForm = document.getElementById('new-event-form')
-        EventForm.innerHTML = ""
     }
 
-    static postFetchArtist(name, genre, comment, trip_id) {
-        fetch(`http://localhost:3000/experiences/`, {
+    static postFetchArtist(name, genre, comment, show_id) {
+        fetch(`http://[::1]:3000/artists`, {
                 method: "POST",
                 body: JSON.stringify({
                     name: name,
                     genre: genre,
                     comment: comment,
-                    trip_id: trip_id
+                    show_id: show_id
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -53,21 +53,21 @@ class App {
             }).then(response => response.json())
             .then(json => {
                 let cardsDivs = document.querySelectorAll('.cards')
-                Artist.addArtistCard(json, cardsDivs[2])
-                cardsDivs[2].parentNode.querySelector('#form').innerHTML = ""
-                Artist.expCardEventListeners()
+                Artist.addArtistCard(json, cardsDivs[0])
+                cardsDivs[0].parentNode.querySelector('#form').innerHTML = ""
+                Artist.artistCardEventListeners()
             })
     }
 
-    static postFetchVenue(name, locale, venue_type, comment, trip_id) {
-        fetch(`http://localhost:3000/tickets/`, {
+    static postFetchVenue(name, locale, venue_type, comment, show_id) {
+        fetch(`http://[::1]:3000/venues/`, {
                 method: "POST",
                 body: JSON.stringify({
                     name: name,
                     locale: locale,
                     venue_type: venue_type,
                     comment: comment,
-                    trip_id: trip_id
+                    show_id: show_id
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -76,14 +76,14 @@ class App {
             }).then(response => response.json())
             .then(json => {
                 let cardsDivs = document.querySelectorAll('.cards')
-                Venue.addVenueCard(json, cardsDivs[1])
-                cardsDivs[1].parentNode.querySelector('#form').innerHTML = ""
+                Venue.addVenueCard(json, cardsDivs[2])
+                cardsDivs[2].parentNode.querySelector('#form').innerHTML = ""
                 Venue.venueCardEventListeners()
             })
     }
 
-    static patchFetchArtist(id, name, genre, comment) {
-        return fetch(`http://localhost:3000/tickets/${id}`, {
+    static async patchFetchArtist(id, name, genre, comment) {
+        const response = await fetch(`http://[::1]:3000/artists/${id}`, {
             method: "PATCH",
             body: JSON.stringify({
                 name: name,
@@ -94,11 +94,12 @@ class App {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             }
-        }).then(response => response.json())
+        })
+        return await response.json()
     }
 
     static async patchFetchArtist(id, name, genre, comment) {
-        const response = await fetch(`http://localhost:3000/experiences/${id}`, {
+        const response = await fetch(`http://[::1]:3000/artists/${id}`, {
             method: "PATCH",
             body: JSON.stringify({
                 name: name,
@@ -113,15 +114,16 @@ class App {
         return await response.json()
     }
 
-    static eventEditPatch(event) {
+    static showEditPatch(event) {
         let current = event.currentTarget
         let id = current.dataset.id
         let sideBar = document.getElementById(`sidebar-${id}`)
-        let name = document.getElementById('edit-event-name').value
-        let start_date = document.getElementById('edit-event-date').value
-        let img = document.getElementById('edit-event-url').value
+        let name = document.getElementById('edit-show-name').value
+        let date = document.getElementById('edit-show-date').value
+        let comment = document.getElementById('edit-show-comment').value
+        let img = document.getElementById('edit-show-url').value
         sideBar.innerText = name
-        fetch(`http://localhost:3000/eventss/${id}`, {
+        fetch(`http://[::1]:3000/shows/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json",
@@ -130,11 +132,12 @@ class App {
                 body: JSON.stringify({
                     name: name,
                     date: date,
+                    comment: comment,
                     img_url: img
                 })
             }).then(response => response.json())
             .then(json => {
-                renderNewEventProfile(json)
+                renderNewShowProfile(json)
             })
     }
 }

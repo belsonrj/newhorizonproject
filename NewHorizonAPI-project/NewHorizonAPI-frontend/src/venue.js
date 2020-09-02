@@ -1,20 +1,22 @@
 class Venue {
+    constructor(name, locale, venue_type, comment, show_id) {
+        this.name = name;
+        this.locale = locale;
+        this.venue_type = venue_type;
+        this.comment = comment;
+        this.show_id = show_id;
+    }
 
-    static createVenueSegment(tripJson) {
+    static createVenueSegment(shwJson) {
         let segmentDiv = createSegment("Venues")
-        segmentDiv.querySelector('.button').dataset.id = tripJson.id
+        segmentDiv.querySelector('.button').dataset.id = shwJson.id
         segmentDiv.querySelector('.button').addEventListener('click', Venue.renderNewVenueForm)
         let cardsDiv = segmentDiv.querySelector('.cards')
-        if (tripJson.experiences.length > 0) {
-            tripJson.venues.forEach(x => {
-                Venue.addVenueCard(x, cardsDiv)
+        if (shwJson.venues.length > 0) {
+            shwJson.venues.forEach(ven => {
+                Venue.addVenueCard(ven, cardsDiv)
             })
-            document.querySelectorAll('#edit-venue').forEach(editButton => {
-                editButton.addEventListener('click', Venue.renderEditForm)
-            })
-            document.querySelectorAll('#delete-venue').forEach(deleteButton => {
-                deleteButton.addEventListener('click', Venue.deleteVenue)
-            })
+            Venue.venueCardEventListeners()
         }
     }
 
@@ -28,23 +30,27 @@ class Venue {
     }
 
     static addVenueCard(venue, cardsDiv) {
-        cardsDiv.innerHTML += `<div class="card" data-id="${venue.id}" id="exp-${venue.id}">
-          ${Experience.renderCard(venue)}
+        cardsDiv.innerHTML += `<div class="card" data-id="${venue.id}" id="venue-${venue.id}">
+          ${Venue.renderCard(venue)}
         </div>`
     }
     static renderCard(venue) {
         return `<div class="content">
-          <div class="header" id="name">${venue.name}</div>
-          <div class="meta" id="locale">${venue.locale}</div>
-          <div class="meta" id="venue_type">${venue.venue_type}</div>
-          <div class="meta" id="comment">${venue.comment}</div>
+      <div class="header">
+        ${venue.name}
+      </div>
+      <div class="description">
+        <b>Genre: </b><p id="genre">${venue.locale}</p>
+        <b>Venue Type: </b><p id="comment">${venue.venue_type}</p><br>
+        <b>Comment: </b><p id="comment">${venue.comment}</p><br>
+      </div>
+      <div class="extra content">
+        <div class="ui two buttons">
+          <div class="ui basic blue button" id="edit-artist" data-id="${artist.id}">Edit</div>
+          <div class="ui basic red button" id="delete-artist" data-id="${artist.id}">Delete</div>
         </div>
-        <div class="extra content">
-          <div class="ui two buttons">
-            <div class="ui basic blue button" id="edit-experience" data-id="${exp.id}">Edit</div>
-            <div class="ui basic red button" id="delete-experience" data-id="${exp.id}">Delete</div>
-          </div>
-        </div>`
+      </div>
+    </div>`
     }
 
     static renderNewVenueForm(e) {
@@ -63,6 +69,10 @@ class Venue {
             <div class="field">
               <input type="text" id="locale" placeholder="Locale">
             </div>
+            <label>Venue Type *</label>
+            <div class="field">
+              <input type="text" id="venue_type" placeholder="Venue Type">
+            </div>
             <label>Comments?</label>
             <div class="field">
               <input type="text" id="relevant-info" placeholder="Comments">
@@ -75,9 +85,9 @@ class Venue {
     }
 
     static createNewVenue(e) {
-        let eventid = e.currentTarget.dataset.id
+        let showid = e.currentTarget.dataset.id
         let formInputs = e.currentTarget.parentNode.querySelectorAll('input')
-        App.postFetchVenue(formInputs[0].value, formInputs[1].value, formInputs[2].value, formInputs[3].value, tripid)
+        App.postFetchVenue(formInputs[0].value, formInputs[1].value, formInputs[2].value, formInputs[3].value, showid)
     }
 
     static renderEditForm(e) {
@@ -131,8 +141,8 @@ class Venue {
         })
     }
 
-    static deleteVenue(event) {
-        let id = event.currentTarget.dataset.id
+    static deleteVenue(venue) {
+        let id = venue.currentTarget.dataset.id
         fetch(`http://localhost:3000/venues/${id}`, {
                 method: "DELETE"
             })
