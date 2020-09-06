@@ -76,8 +76,8 @@ class App {
             }).then(response => response.json())
             .then(json => {
                 let cardsDivs = document.querySelectorAll('.cards')
-                Venue.addVenueCard(json, cardsDivs[2])
-                cardsDivs[2].parentNode.querySelector('#form').innerHTML = ""
+                Venue.addVenueCard(json, cardsDivs[1])
+                cardsDivs[1].parentNode.querySelector('#form').innerHTML = ""
                 Venue.venueCardEventListeners()
             })
     }

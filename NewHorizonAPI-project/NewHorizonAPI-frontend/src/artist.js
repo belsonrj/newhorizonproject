@@ -1,19 +1,28 @@
+//let artists = { artists: [] }
 class Artist {
-    constructor(name, genre, comment, show_id) {
-        this.name = name;
-        this.genre = genre;
-        this.comment = comment;
-        this.show_id = show_id;
-    }
+    //constructor(name, genre, comment, show_id) {
+    //    this.name = name;
+    //    this.genre = genre;
+    //    this.comment = comment;
+    //    this.show_id = show_id;
+    //}
+
+    //function myFunc(unknownStringVar stringy) {
+    //  var knownStringVar = "" + stringy;
+    // go about your day
+    //}
 
     static createArtistSegment(showJson) {
+        var arr = fetch(`${BASE_URL}/shows/${showJson.id}/artists`)
         let segmentDiv = createSegment("Artists")
         let cardsDiv = segmentDiv.querySelector('.cards')
         segmentDiv.querySelector('.button').dataset.id = showJson.id
         segmentDiv.querySelector('.button').addEventListener('click', Artist.renderNewArtistForm)
-            //debugger
-        if (showJson.artists.length > 0) {
-            showJson.artists.forEach(artist => {
+            //var arr = showJson.artists
+        var arr1 = JSON.stringify(arr);
+        var arr2 = JSON.parse(arr1);
+        if (arr2.length > 0) {
+            arr2.forEach(artist => {
                 Artist.addArtistCard(artist, cardsDiv)
             })
             Artist.artistCardEventListeners()

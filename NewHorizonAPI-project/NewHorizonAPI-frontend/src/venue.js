@@ -5,16 +5,20 @@ class Venue {
         this.venue_type = venue_type;
         this.comment = comment;
         this.show_id = show_id;
+        show_id.venues.push(this)
     }
 
-    static createVenueSegment(shwJson) {
+    static createVenueSegment(showJson) {
+        //let venues = fetch(`${BASE_URL}/shows/${showJson.id}/venues`)
         let segmentDiv = createSegment("Venues")
-        segmentDiv.querySelector('.button').dataset.id = shwJson.id
-        segmentDiv.querySelector('.button').addEventListener('click', Venue.renderNewVenueForm)
         let cardsDiv = segmentDiv.querySelector('.cards')
-        if (shwJson.venues.length > 0) {
-            shwJson.venues.forEach(ven => {
-                Venue.addVenueCard(ven, cardsDiv)
+        segmentDiv.querySelector('.button').dataset.id = showJson.id
+        segmentDiv.querySelector('.button').addEventListener('click', Venue.renderNewVenueForm)
+        if (showJson.venues.length > 0) {
+            showJson.venues.forEach(ven => {
+                //if (venues.length > 0) {
+                //    venues.forEach(venue => {
+                Venue.addVenueCard(venue, cardsDiv)
             })
             Venue.venueCardEventListeners()
         }
@@ -34,20 +38,21 @@ class Venue {
           ${Venue.renderCard(venue)}
         </div>`
     }
+
     static renderCard(venue) {
         return `<div class="content">
       <div class="header">
         ${venue.name}
       </div>
       <div class="description">
-        <b>Genre: </b><p id="genre">${venue.locale}</p>
-        <b>Venue Type: </b><p id="comment">${venue.venue_type}</p><br>
+        <b>Locale: </b><p id="locale">${venue.locale}</p>
+        <b>Venue Type: </b><p id="venue_type">${venue.venue_type}</p><br>
         <b>Comment: </b><p id="comment">${venue.comment}</p><br>
       </div>
       <div class="extra content">
         <div class="ui two buttons">
-          <div class="ui basic blue button" id="edit-artist" data-id="${artist.id}">Edit</div>
-          <div class="ui basic red button" id="delete-artist" data-id="${artist.id}">Delete</div>
+          <div class="ui basic blue button" id="edit-venue" data-id="${venue.id}">Edit</div>
+          <div class="ui basic red button" id="delete-venue" data-id="${venue.id}">Delete</div>
         </div>
       </div>
     </div>`

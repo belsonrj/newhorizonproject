@@ -6,15 +6,15 @@ class Show {
         this.img_url = img_url;
     }
 
-    static renderSideBar(shw) {
+    static renderSideBar(show) {
         let sideBar = document.getElementById('invertedMenu')
         let a = document.createElement('a')
         a.addEventListener('click', renderShowProfile)
         a.classList.add("active", "item")
         sideBar.appendChild(a)
-        a.innerText = shw.name
-        a.dataset.id = shw.id
-        a.id = `sidebar-${shw.id}`
+        a.innerText = show.name
+        a.dataset.id = show.id
+        a.id = `sidebar-${show.id}`
     }
 
     static newShow() {

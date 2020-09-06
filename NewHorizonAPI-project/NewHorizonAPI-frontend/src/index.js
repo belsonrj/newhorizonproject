@@ -31,15 +31,15 @@ function fetchShows() {
     fetch(`${BASE_URL}/shows`)
         .then(response => response.json())
         .then(json => {
-            for (let shw of json) {
-                Show.renderSideBar(shw)
+            for (let show of json) {
+                Show.renderSideBar(show)
             }
         })
 }
 
 function renderShowProfile(event) {
     let id = event.currentTarget.dataset.id
-    let app = new App()
+        //let app = new App()
     App.fetchOneShow(id).then(showJson => {
         renderNewShowProfile(showJson)
     })
@@ -69,9 +69,15 @@ function createSegment(name) {
     return segmentDiv
 }
 
+//function myFunc(unknownStringVar stringy) {
+//  var knownStringVar = "" + stringy;
+// go about your day
+//}
+
 function renderNewShowProfile(showJson) {
     Show.renderShowSegment(showJson)
     Artist.createArtistSegment(showJson)
+        //debugger
     Venue.createVenueSegment(showJson)
 }
 
