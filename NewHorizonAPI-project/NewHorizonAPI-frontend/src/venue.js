@@ -1,24 +1,21 @@
 class Venue {
-    constructor(name, locale, venue_type, comment, show_id) {
-        this.name = name;
-        this.locale = locale;
-        this.venue_type = venue_type;
-        this.comment = comment;
-        this.show_id = show_id;
-        show_id.venues.push(this)
-    }
+    //constructor(name, locale, venue_type, comment, show_id) {
+    //    this.name = name;
+    //    this.locale = locale;
+    //    this.venue_type = venue_type;
+    //    this.comment = comment;
+    //    this.show_id = show_id;
+    //show_id.venues.push(this)
+    //}
 
     static createVenueSegment(showJson) {
-        //let venues = fetch(`${BASE_URL}/shows/${showJson.id}/venues`)
         let segmentDiv = createSegment("Venues")
         let cardsDiv = segmentDiv.querySelector('.cards')
         segmentDiv.querySelector('.button').dataset.id = showJson.id
         segmentDiv.querySelector('.button').addEventListener('click', Venue.renderNewVenueForm)
         if (showJson.venues.length > 0) {
             showJson.venues.forEach(ven => {
-                //if (venues.length > 0) {
-                //    venues.forEach(venue => {
-                Venue.addVenueCard(venue, cardsDiv)
+                Venue.addVenueCard(ven, cardsDiv)
             })
             Venue.venueCardEventListeners()
         }

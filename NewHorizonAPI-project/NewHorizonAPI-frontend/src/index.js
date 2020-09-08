@@ -1,4 +1,4 @@
-var codes = [
+const codes = [
     "ArrowUp",
     "ArrowUp",
     "ArrowDown",
@@ -10,9 +10,10 @@ var codes = [
     "b",
     "a"
 ];
-var BASE_URL = 'http://[::1]:3000';
-var home = document.getElementById('homeButton')
-var addShow = document.getElementById('new-show')
+
+let BASE_URL = 'http://[::1]:3000';
+let home = document.getElementById('homeButton')
+let addShow = document.getElementById('new-show')
 document.addEventListener('DOMContentLoaded', init)
 
 function init() {
@@ -39,7 +40,7 @@ function fetchShows() {
 
 function renderShowProfile(event) {
     let id = event.currentTarget.dataset.id
-        //let app = new App()
+    const app = new App()
     App.fetchOneShow(id).then(showJson => {
         renderNewShowProfile(showJson)
     })

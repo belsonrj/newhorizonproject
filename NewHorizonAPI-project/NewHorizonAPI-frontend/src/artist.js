@@ -1,28 +1,20 @@
-//let artists = { artists: [] }
 class Artist {
     //constructor(name, genre, comment, show_id) {
     //    this.name = name;
     //    this.genre = genre;
     //    this.comment = comment;
     //    this.show_id = show_id;
-    //}
-
-    //function myFunc(unknownStringVar stringy) {
-    //  var knownStringVar = "" + stringy;
-    // go about your day
+    //    //show_id.artists.push(this)
     //}
 
     static createArtistSegment(showJson) {
-        var arr = fetch(`${BASE_URL}/shows/${showJson.id}/artists`)
         let segmentDiv = createSegment("Artists")
         let cardsDiv = segmentDiv.querySelector('.cards')
         segmentDiv.querySelector('.button').dataset.id = showJson.id
         segmentDiv.querySelector('.button').addEventListener('click', Artist.renderNewArtistForm)
-            //var arr = showJson.artists
-        var arr1 = JSON.stringify(arr);
-        var arr2 = JSON.parse(arr1);
-        if (arr2.length > 0) {
-            arr2.forEach(artist => {
+            //debugger
+        if (showJson.artists.length > 0) {
+            showJson.artists.forEach(artist => {
                 Artist.addArtistCard(artist, cardsDiv)
             })
             Artist.artistCardEventListeners()
@@ -70,7 +62,7 @@ class Artist {
         <h4 class="ui dividing header">New Artist</h4>
         <div class="field">
           <div class="one field">
-            <label>Type *</label>
+            <label>Name *</label>
             <div class="field">
               <input type="text" id="name" placeholder="Name">
             </div>
@@ -92,8 +84,8 @@ class Artist {
     static createNewArtist(e) {
         let showid = e.currentTarget.dataset.id
         let formInputs = e.currentTarget.parentNode.querySelectorAll('input')
-            //debugger
         App.postFetchArtist(formInputs[0].value, formInputs[1].value, formInputs[2].value, showid)
+
     }
 
     static renderEditForm(e) {

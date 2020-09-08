@@ -4,7 +4,13 @@ class Show {
         this.date = date;
         this.comment = comment;
         this.img_url = img_url;
+        //this.artists = [];
+        //this.venues = [];
     }
+
+    //static addArtist(artist) {
+    //    this.artists.push(artist);
+    //}
 
     static renderSideBar(show) {
         let sideBar = document.getElementById('invertedMenu')
