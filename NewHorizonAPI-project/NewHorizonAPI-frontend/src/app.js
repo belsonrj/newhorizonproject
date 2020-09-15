@@ -98,12 +98,13 @@ class App {
         return await response.json()
     }
 
-    static async patchFetchArtist(id, name, genre, comment) {
-        const response = await fetch(`http://[::1]:3000/artists/${id}`, {
+    static async patchFetchVenue(id, name, locale, venue_type, comment) {
+        const response = await fetch(`http://[::1]:3000/venues/${id}`, {
             method: "PATCH",
             body: JSON.stringify({
                 name: name,
-                genre: genre,
+                locale: locale,
+                venue_type: venue_type,
                 comment: comment
             }),
             headers: {

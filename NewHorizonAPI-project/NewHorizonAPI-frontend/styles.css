@@ -13,6 +13,13 @@
     text-shadow: 5px 5px #000000;
 }
 
+.second-text {
+    font-family: sans-serif;
+    color: white;
+    font-size: 30px;
+    text-shadow: 5px 5px #000000;
+}
+
 .segment {
     float: left;
     width: inherit;
@@ -24,21 +31,22 @@
 }
 
 .ui.grid {
-    background-color: rgba(61, 77, 253, 0.163);
+    background-image: url(https://www.strangewaysradio.com/wp-content/uploads/2015/05/music-background.jpg);
+    background-attachment: fixed;
     padding: 20px;
     width: 100%;
     float: left;
 }
 
 .ui.segment {
-    background-color: rgba(227, 238, 241, 0.497);
+    background-color: rgba(78, 90, 171, 0.633);
     padding: 30px;
 }
 
 .ui.label {
     font-weight: 700;
-    font-size: 1.15em;
-    text-shadow: 1px 1px #000000;
+    font-size: 1.5em;
+    text-shadow: 1px 1px #b7addd;
 }
 
 .location_img {
@@ -46,7 +54,7 @@
 }
 
 .ui.button {
-    background-color: rgb(8, 208, 253);
+    background-color: rgb(100, 148, 191);
     margin-top: 20px;
     margin-bottom: 12px;
 }

@@ -12,7 +12,6 @@ class Artist {
         let cardsDiv = segmentDiv.querySelector('.cards')
         segmentDiv.querySelector('.button').dataset.id = showJson.id
         segmentDiv.querySelector('.button').addEventListener('click', Artist.renderNewArtistForm)
-            //debugger
         if (showJson.artists.length > 0) {
             showJson.artists.forEach(artist => {
                 Artist.addArtistCard(artist, cardsDiv)
@@ -92,7 +91,6 @@ class Artist {
         let id = e.currentTarget.dataset.id
         let artist
         let form = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('#form')
-            //debugger
         App.fetchOneArtist(id).then(json => {
             artist = json
             form.innerHTML = `<form class="ui form">

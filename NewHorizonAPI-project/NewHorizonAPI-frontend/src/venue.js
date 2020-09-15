@@ -95,7 +95,7 @@ class Venue {
     static renderEditForm(e) {
         let id = e.currentTarget.dataset.id
         let venue
-        let form = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('#form')
+        let form = e.currentTarget.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.querySelector('#form')
         App.fetchOneVenue(id).then(json => {
             venue = json
             form.innerHTML = `<form class="ui form">

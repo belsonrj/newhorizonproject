@@ -1,16 +1,3 @@
-const codes = [
-    "ArrowUp",
-    "ArrowUp",
-    "ArrowDown",
-    "ArrowDown",
-    "ArrowLeft",
-    "ArrowRight",
-    "ArrowLeft",
-    "ArrowRight",
-    "b",
-    "a"
-];
-
 let BASE_URL = 'http://[::1]:3000';
 let home = document.getElementById('homeButton')
 let addShow = document.getElementById('new-show')
@@ -70,15 +57,9 @@ function createSegment(name) {
     return segmentDiv
 }
 
-//function myFunc(unknownStringVar stringy) {
-//  var knownStringVar = "" + stringy;
-// go about your day
-//}
-
 function renderNewShowProfile(showJson) {
     Show.renderShowSegment(showJson)
     Artist.createArtistSegment(showJson)
-        //debugger
     Venue.createVenueSegment(showJson)
 }
 
