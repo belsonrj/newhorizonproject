@@ -1,9 +1,14 @@
 class Show {
-    constructor(name, date, comment, img_url) {
-        this.name = name;
-        this.date = date;
-        this.comment = comment;
-        this.img_url = img_url;
+
+    static allShows = []
+
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.date = data.date;
+        this.comment = data.comment;
+        this.img_url = data.img_url;
+        Show.allShows.push(this)
     }
 
     static renderSideBar(show) {

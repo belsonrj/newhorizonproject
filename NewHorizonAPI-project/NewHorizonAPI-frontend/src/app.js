@@ -1,4 +1,7 @@
 class App {
+    constructor() {
+        this.baseUrl = `http://[::1]:3000`;
+    }
 
     static fetchOneShow(id) {
         return fetch(`${BASE_URL}/shows/${id}`)
@@ -13,6 +16,16 @@ class App {
     static fetchOneVenue(id) {
         return fetch(`${BASE_URL}/venues/${id}`)
             .then(response => response.json())
+    }
+
+    static async getAllShows() {
+        const res = await fetch(`${BASE_URL}/shows`, {
+            headers: {
+                'content-type': 'application/json',
+            },
+        });
+        const data = await res.json();
+        return data;
     }
 
     static postFetchShow(name, date, comment, img_url) {
