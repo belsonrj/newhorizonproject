@@ -9,9 +9,10 @@ class Show {
         this.comment = data.comment;
         this.img_url = data.img_url;
         Show.allShows.push(this)
+        this.renderSideBar(this)
     }
 
-    static renderSideBar(show) {
+    renderSideBar(show) {
         let sideBar = document.getElementById('invertedMenu')
         let a = document.createElement('a')
         a.addEventListener('click', renderShowProfile)

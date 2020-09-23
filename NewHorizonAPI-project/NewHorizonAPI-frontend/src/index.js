@@ -48,7 +48,7 @@ async function fetchShows() {
     showData.forEach((show) => {
         show = new Show(show);
         //debugger
-        Show.renderSideBar(show);
+        //show.renderSideBar(show);
     });
 
 }
