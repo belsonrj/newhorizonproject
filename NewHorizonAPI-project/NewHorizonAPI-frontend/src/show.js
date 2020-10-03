@@ -1,6 +1,6 @@
 class Show {
 
-    static allShows = []
+    static allShows = [];
 
     constructor(data) {
         this.id = data.id;
@@ -8,14 +8,16 @@ class Show {
         this.date = data.date;
         this.comment = data.comment;
         this.img_url = data.img_url;
+        this.artists = data.artists;
+        this.venues = data.venues;
         Show.allShows.push(this)
-        this.renderSideBar(this)
-    }
+        renderSideBar(this)
+    
 
-    renderSideBar(show) {
+    function renderSideBar(show) {
         let sideBar = document.getElementById('invertedMenu')
         let a = document.createElement('a')
-        a.addEventListener('click', renderShowProfile)
+        a.addEventListener('click', renderShowSegment)
         a.classList.add("active", "item")
         sideBar.appendChild(a)
         a.innerText = show.name
@@ -23,7 +25,7 @@ class Show {
         a.id = `sidebar-${show.id}`
     }
 
-    static newShow() {
+    function newShow() {
         let showForm = document.getElementById('new-show-form')
         showForm.innerHTML = ""
         showForm.innerHTML = `<form class="ui form">
@@ -49,10 +51,10 @@ class Show {
             <div class="ui button" id="new-show-button" tabindex="0">Create Event</div>
             </form>`
         let createButton = document.getElementById('new-show-button')
-        createButton.addEventListener('click', this.makeNewShow)
+        createButton.addEventListener('click', makeNewShow)
     }
 
-    static makeNewShow() {
+    function makeNewShow() {
         let show = document.getElementById('new-show-form')
         let showName = document.getElementById('new-show-name').value
         let showDate = document.getElementById('new-show-date').value
@@ -62,10 +64,12 @@ class Show {
         show.innerHTML = ""
     }
 
-    static renderShowSegment(showJson) {
+     function renderShowSegment(event) {
+        let show = event.currentTarget.dataset.id;
+        let shw = Show.allShows.find(x => x.id == show);
         let container = document.getElementById('twelve')
         container.innerHTML = ""
-        this.createShowSegment(showJson.id)
+        createShowSegment(shw.id)
         let show_info = document.getElementById('show-description')
         let showDetails = document.createElement('div')
         let imgDiv = document.createElement('div')
@@ -82,13 +86,13 @@ class Show {
         show_info.append(showDetails, imgDiv)
         showDetails.append(b, p, b2, p2, b3, p3)
         imgDiv.appendChild(img)
-        img.src = showJson.img_url
+        img.src = shw.img_url
         b.innerText = 'Event Name:'
         b2.innerText = 'Date:'
         b3.innerText = 'Comments:'
-        p.innerText = showJson.name
-        p2.innerText = showJson.date
-        p3.innerText = showJson.comment
+        p.innerText = shw.name
+        p2.innerText = shw.date
+        p3.innerText = shw.comment
         img.id = 'show-img'
         p.id = 'show-name'
         p2.id = 'show-date'
@@ -96,7 +100,7 @@ class Show {
 
     }
 
-    static createShowSegment(id) {
+    function createShowSegment(id) {
         let segmentsDiv = document.querySelector('.twelve')
         let div = document.createElement('div')
         let div1 = document.createElement('div')
@@ -127,13 +131,13 @@ class Show {
 
         let eButton = document.getElementById('edit-show')
         eButton.dataset.id = id
-        eButton.onclick = Show.editShow
+        eButton.onclick = editShow
         let dButton = document.getElementById('delete-show')
         dButton.dataset.id = id
-        dButton.onclick = this.deleteShow
+        dButton.onclick = deleteShow
     }
 
-    static editShow(show) {
+    function editShow(show) {
         let id = show.currentTarget.dataset.id
         let changeShow = document.getElementById('edit-show-form')
         changeShow.innerHTML = `<form class="ui form">
@@ -166,12 +170,11 @@ class Show {
         document.getElementById('edit-show-date').value = currentDate
         document.getElementById('edit-show-comment').value = currentComment
         document.getElementById('edit-show-url').value = currentImg
-            //debugger
         let editShowForm = document.getElementById('edit-show-button')
         editShowForm.dataset.id = id
         editShowForm.addEventListener('click', App.showEditPatch)
     }
-    static deleteShow(show) {
+    function deleteShow(show) {
         let id = show.currentTarget.dataset.id
         fetch(`http://[::1]:3000/shows/${id}`, {
                 method: "DELETE"
@@ -185,4 +188,5 @@ class Show {
                 sideInfo.removeChild(sideShow)
             })
     }
+}
 }

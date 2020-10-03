@@ -47,8 +47,6 @@ async function fetchShows() {
     const showData = await App.getAllShows();
     showData.forEach((show) => {
         show = new Show(show);
-        //debugger
-        //show.renderSideBar(show);
     });
 
 }
@@ -66,13 +64,12 @@ async function fetchShows() {
 //}
 
 
-function renderShowProfile(event) {
-    let id = event.currentTarget.dataset.id
-        //const app = new Show(id)
-    App.fetchOneShow(id).then(showJson => {
-        renderNewShowProfile(showJson)
-    })
-}
+//function renderShowProfile(event) {
+//    let id = event.currentTarget.dataset.id
+//    App.fetchOneShow(id).then(showJson => {
+//        renderNewShowProfile(showJson)
+//    })
+//}
 
 function createSegment(name) {
     let columnDiv = document.querySelector('.twelve')
@@ -98,10 +95,10 @@ function createSegment(name) {
     return segmentDiv
 }
 
-function renderNewShowProfile(showJson) {
-    Show.renderShowSegment(showJson)
-    Artist.createArtistSegment(showJson)
-    Venue.createVenueSegment(showJson)
+function renderNewShowProfile(show) {
+    Show.renderShowSegment(show)
+    //Artist.createArtistSegment(showJson)
+    //Venue.createVenueSegment(showJson)
 }
 
 function wipeShowInfo() {
